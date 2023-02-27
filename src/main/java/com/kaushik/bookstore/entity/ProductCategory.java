@@ -14,7 +14,8 @@ import java.util.Set;
 public class ProductCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
+    @Column(name = "category_id")
+    private Long id;
     private String categoryName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "category")
     private Set<Product> products;
