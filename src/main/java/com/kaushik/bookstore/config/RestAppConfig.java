@@ -1,7 +1,9 @@
 package com.kaushik.bookstore.config;
 
+import com.kaushik.bookstore.entity.Country;
 import com.kaushik.bookstore.entity.Product;
 import com.kaushik.bookstore.entity.ProductCategory;
+import com.kaushik.bookstore.entity.State;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.metamodel.EntityType;
 import lombok.AllArgsConstructor;
@@ -24,15 +26,18 @@ public class RestAppConfig implements RepositoryRestConfigurer {
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
         HttpMethod[] theUnsupportedActions = {HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE};
-        config.getExposureConfiguration()
-                .forDomainType(Product.class)
-                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
-        config.getExposureConfiguration()
-                .forDomainType(ProductCategory.class)
-                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
-                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
+        disableHttpsMethods(Product.class, config, theUnsupportedActions);
+        disableHttpsMethods(ProductCategory.class, config, theUnsupportedActions);
+        disableHttpsMethods(Country.class, config, theUnsupportedActions);
+        disableHttpsMethods(State.class, config, theUnsupportedActions);
         exposeIds(config);
+    }
+
+    private void disableHttpsMethods(Class myclass ,RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {
+        config.getExposureConfiguration()
+                .forDomainType(myclass)
+                .withItemExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions))
+                .withCollectionExposure((metdata, httpMethods) -> httpMethods.disable(theUnsupportedActions));
     }
 
     private void exposeIds(RepositoryRestConfiguration config) {
@@ -43,6 +48,5 @@ public class RestAppConfig implements RepositoryRestConfigurer {
         }
         Class[] type = classes.toArray(new Class[0]);
         config.exposeIdsFor(type);
-
     }
 }
