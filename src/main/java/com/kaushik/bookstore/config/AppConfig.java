@@ -1,11 +1,11 @@
 package com.kaushik.bookstore.config;
 
+import com.kaushik.bookstore.exception.UserNotFoundException;
 import com.kaushik.bookstore.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Configuration
 @RequiredArgsConstructor
@@ -16,6 +16,6 @@ public class AppConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not fount!"));
+                .orElseThrow(() -> new UserNotFoundException("User not found!"));
     }
 }

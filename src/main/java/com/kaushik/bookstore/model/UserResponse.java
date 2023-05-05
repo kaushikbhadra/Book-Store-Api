@@ -1,5 +1,6 @@
 package com.kaushik.bookstore.model;
 
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
-    private String token;
-    private UserResponse user;
+public class UserResponse {
+    private String name;
+    private String email;
 }

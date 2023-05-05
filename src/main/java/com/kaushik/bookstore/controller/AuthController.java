@@ -4,6 +4,7 @@ import com.kaushik.bookstore.model.AuthenticationRequest;
 import com.kaushik.bookstore.model.AuthenticationResponse;
 import com.kaushik.bookstore.model.UserModel;
 import com.kaushik.bookstore.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,14 +19,14 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody UserModel request
+           @Valid @RequestBody UserModel request
     ) {
         return ResponseEntity.ok(userService.registerUser(request));
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request
+           @Valid @RequestBody AuthenticationRequest request
     ) {
         return ResponseEntity.ok(userService.authenticate(request));
     }
