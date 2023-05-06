@@ -13,5 +13,7 @@ spring:
   data:
     rest:
       base-path: /api
+      detection-strategy: annotated
   application:
     name: BOOK-STORE
+allowed-origins: http://localhost:4200

@@ -10,7 +10,6 @@ import com.kaushik.bookstore.model.UserResponse;
 import com.kaushik.bookstore.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -35,7 +34,12 @@ public class UserServiceImpl implements UserService{
         modelMapper.map(user, userResponse);
         user.setPassword(passwordEncoder.encode(userModel.getPassword()));
         user.setRole(Role.USER);
-        userRepository.save(user);
+        var userPresent = userRepository.findByEmail(userModel.getEmail());
+        if (userPresent.isPresent()) {
+            throw new RuntimeException("Email Already Exists");
+        } else {
+            userRepository.save(user);
+        }
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)

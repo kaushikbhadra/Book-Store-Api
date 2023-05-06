@@ -7,6 +7,7 @@ import com.kaushik.bookstore.entity.State;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.metamodel.EntityType;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
@@ -23,14 +24,20 @@ public class RestAppConfig implements RepositoryRestConfigurer {
 
     private final EntityManager entityManager;
 
+    @Value("${allowed-origins}")
+    private String[] allowOrigin;
+
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry cors) {
-        HttpMethod[] theUnsupportedActions = {HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE};
+        HttpMethod[] theUnsupportedActions = {HttpMethod.POST, HttpMethod.PUT,HttpMethod.PATCH, HttpMethod.DELETE};
         disableHttpsMethods(Product.class, config, theUnsupportedActions);
         disableHttpsMethods(ProductCategory.class, config, theUnsupportedActions);
         disableHttpsMethods(Country.class, config, theUnsupportedActions);
         disableHttpsMethods(State.class, config, theUnsupportedActions);
         exposeIds(config);
+        cors.addMapping(config.getBasePath() + "/**")
+                .allowedHeaders("*")
+                .allowedOrigins(allowOrigin);
     }
 
     private void disableHttpsMethods(Class myclass ,RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {
