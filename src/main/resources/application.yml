@@ -18,7 +18,7 @@ spring:
     name: BOOK-STORE
   liquibase:
     contexts:
-allowed-origins: http://localhost:4200
+allowed-origins: https://book-store-ui-app.web.app
 #springdoc:
 #  api-docs:
 #    path: /api/api-doc
