@@ -28,10 +28,16 @@ import org.springframework.context.annotation.Configuration;
                 ),
                 description = "Book store api documentation with spring security."
         ),
-        servers = @Server(
+        servers = {
+                @Server(
                 url = "http://localhost:8082",
                 description = "Development"
-        )
+                ),
+                @Server(
+                url = "https://book-store-api-production.up.railway.app/",
+                description = "Production"
+                )
+        }
 )
 @SecurityScheme(
         name = "Bearer Authentication",
