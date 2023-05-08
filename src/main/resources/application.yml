@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/book-store
-    username: springstudent
-    password: springstudent
+    url: jdbc:mysql://containers-us-west-162.railway.app:7815/railway
+    username: root
+    password: 23WmFyzRNyApt11HpZPF
   jpa:
     hibernate:
       ddl-auto: update
