@@ -9,11 +9,18 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
   data:
     rest:
       base-path: /api
       detection-strategy: annotated
   application:
     name: BOOK-STORE
+  liquibase:
+    contexts:
 allowed-origins: http://localhost:4200
+#springdoc:
+#  api-docs:
+#    path: /api/api-doc
+#  swagger-ui:
+#    path: /api/swagger-ui

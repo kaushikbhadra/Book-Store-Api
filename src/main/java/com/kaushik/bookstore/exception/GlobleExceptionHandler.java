@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 
@@ -14,6 +15,7 @@ public class GlobleExceptionHandler {
 
 
     @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ResponseModel> userNotFoundException(UserNotFoundException exp) {
         String message = exp.getMessage();
         ResponseModel responseModel = new ResponseModel(message, false);
@@ -32,6 +34,7 @@ public class GlobleExceptionHandler {
 //        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
 //    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ResponseModel> exceptionHandler(MethodArgumentNotValidException exception) {
         String message = exception.getBindingResult().getFieldErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -42,6 +45,7 @@ public class GlobleExceptionHandler {
    }
 
     @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<ResponseModel> exceptionHandler(Exception exception) {
         String message = exception.getMessage();
         ResponseModel responseModel = new ResponseModel(message, false);

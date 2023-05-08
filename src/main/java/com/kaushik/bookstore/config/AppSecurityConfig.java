@@ -29,7 +29,17 @@ public class AppSecurityConfig {
     private static final String [] URL_LIST = {
             "/api/auth/**",
             "/api/products/**",
-            "/api/product-category/**"
+            "/api/product-category/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/webjars/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-ui.html",
+            "/swagger-ui/**"
     };
 
     @Bean
@@ -73,7 +83,5 @@ public class AppSecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
-
 
 }
